@@ -1,9 +1,11 @@
-import { useState } from 'react';
-function ChatMock({question}) {
-  const [dialog, setDialog] = useState('');  
-  let response = dialog+question;
+function ChatMock({text}) {
+  
+  let response = text;
     return (
-    response    
+      <>
+      <h2>Log</h2>
+      <p>{response}</p>
+      </>    
   )
 }
 export default ChatMock
