@@ -1,10 +1,20 @@
+import { useState } from 'react';
+import showTime from './ShowTime';
+
 function ChatMock({text}) {
+
+  const[log,setLog] = useState("");
   
-  let response = text;
+  var currentTime=showTime();
+  setLog(currentTime+"<strong> user: </strong>"+text);
+  var myQuestion = log+"<br/>";
+  var myLogDiv = document.getElementById("log");
+  myLogDiv.innerHTML += myQuestion; 
+  
     return (
       <>
-      <h2>Log</h2>
-      <p>{response}</p>
+      {/* <div id="log" className='bg-white'>  */}
+      <div id="log"></div>          
       </>    
   )
 }
