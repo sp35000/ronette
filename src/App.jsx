@@ -26,11 +26,6 @@ function App() {
     if (question != "") {
       var answer=chat(question);
       // var answer="answer to question " + question;
-      var currentTime=showTime();
-      var myAnswer = "<p>"+currentTime+"<strong> Ronette: </strong>"+answer+'</p>';
-      var myLogDiv = document.getElementById("log");
-      myLogDiv.innerHTML += myAnswer; 
-      setLog(myLogDiv.innerHTML);
       question = "";
     } else {
       answer = "chatCompletion NOK";
@@ -39,10 +34,6 @@ function App() {
     setLog(myLogDiv.innerHTML);
     setText("");    
   };
-  // if (myLogDiv != null && question == "") {
-  //   myLogDiv.innerHTML ="<h2>History</h2>"
-  // }
-
   
   return (
     <>
@@ -50,13 +41,12 @@ function App() {
       <Row>
         <Col>
           <h1>Ronette</h1>  
+          <div id="log" className="bg-light overflow-auto">
+          </div>
           <form onSubmit={handleSubmit}>
             <textarea value={text} onChange={(e) => setText(e.target.value)} />
             <button type="submit">Submit</button>
           </form>
-          <br/>
-          <div id="log">
-          </div>
         </Col>
       </Row>
     </Container>

@@ -10,20 +10,34 @@ function chat(question) {
   const openai = new OpenAIApi(configuration);
   console.log("chat - question: "+question);
 
-  // 3. UseEffect 
-  const chatCompletion = async () => {
+  function updateLog(answer) {
+      var currentTime=showTime();
+      var myAnswer = "<p>"+currentTime+"<strong> Ronette: </strong>"+answer+'</p>';
+      var myLogDiv = document.getElementById("log");
+      myLogDiv.innerHTML += myAnswer; 
+  }
+
+  let myPromise = new Promise(function(myResolve, myReject) {
+    let x = 0;
+    if (x == 0) {
+      myResolve(chatCompletion())
+    } else {
+      myReject("Error contacting ChatGPT");
+    }
+  });
+
+  async function chatCompletion() {
     let response = await openai.createChatCompletion({
       model: "gpt-3.5-turbo",
       messages: [{ role: "user", content: question }],
-    });
-    var answer = "One moment..."
-    answer = response.data.choices[0].message.content;
-    var currentTime=showTime();
-    var myAnswer = "<p>"+currentTime+"<strong> Ronette: </strong>"+answer+'</p>';
-    var myLogDiv = document.getElementById("log");
-    myLogDiv.innerHTML += myAnswer; 
+    });    
+    return(response.data.choices[0].message.content);
   }
-    // answer = "chatCompletion OK";
-    chatCompletion();
+
+  myPromise.then(
+    function(value) {updateLog(value);},
+    function(error) {updateLog(error);}
+  );
+
 }
 export default chat;
